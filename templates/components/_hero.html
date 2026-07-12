@@ -1,0 +1,40 @@
+{% set hero = sections.hero.content if (sections and sections.hero and sections.hero.content) else {} %}
+<section class="bg-white border-b border-slate-100" aria-labelledby="hero-title">
+  <div class="max-w-7xl mx-auto px-4 py-10 lg:py-16 grid lg:grid-cols-12 gap-10 items-center">
+    <div class="lg:col-span-7">
+      <div class="inline-flex bg-blue-50 text-[#0E4FCB] text-xs font-bold px-3 py-1 rounded-full mb-4">
+        {{ hero.badge if hero.badge else 'Chegada em até 90 min • Sorocaba e Região' }}
+      </div>
+      <h1 id="hero-title" class="text-4xl lg:text-[48px] font-black leading-[0.95] text-[#0A1F44]">
+        {{ hero.title if hero.title else 'Conserto de Geladeira e Máquina de Lavar em Sorocaba' }}
+      </h1>
+      <p class="mt-5 text-lg text-slate-600 leading-relaxed">
+        {{ hero.subtitle if hero.subtitle else 'Atendimento ágil de motos e carros de apoio.' }}
+      </p>
+
+      <div class="mt-6 flex flex-wrap gap-2 text-xs font-semibold">
+        <span class="bg-slate-100 px-3 py-1.5 rounded-full">{{ hero.tag1 if hero.tag1 else '⭐ 4.9 no Google' }}</span>
+        <span class="bg-slate-100 px-3 py-1.5 rounded-full">{{ hero.tag2 if hero.tag2 else '+8.500 atendimentos' }}</span>
+        <span class="bg-slate-100 px-3 py-1.5 rounded-full">{{ hero.tag3 if hero.tag3 else 'Wericles e Valdevino' }}</span>
+      </div>
+
+      <div class="mt-8 flex flex-wrap gap-3">
+        <a href="https://wa.me/5515991340446" target="_blank" class="bg-[#0E4FCB] text-white px-7 py-3.5 rounded-full font-bold shadow-lg hover:bg-blue-700 transition">
+          {{ hero.button_primary_text if hero.button_primary_text else 'Solicitar Técnico Agora' }}
+        </a>
+        <a href="#servicos" class="bg-white border px-7 py-3.5 rounded-full font-bold text-slate-700 hover:bg-slate-50 transition">
+          {{ hero.button_secondary_text if hero.button_secondary_text else 'Ver Preços' }}
+        </a>
+      </div>
+    </div>
+
+    <div class="lg:col-span-5 relative">
+      <img src="{{ url_for('static', filename='img/refrigeration_technician_portrait.webp') }}" alt="Técnico Wericles" width="600" height="420" class="rounded-[24px] shadow-2xl w-full object-cover h-[420px] object-top">
+      <div class="absolute -bottom-5 -left-5 bg-white p-4 rounded-2xl shadow-xl border w-[260px]">
+        <p class="text-xs font-bold text-slate-500 uppercase">{{ hero.time_badge_title if hero.time_badge_title else 'Tempo médio hoje' }}</p>
+        <p class="text-2xl font-black text-[#0A1F44]">{{ hero.time_badge_value if hero.time_badge_value else '43 minutos' }}</p>
+        <p class="text-xs text-slate-500 mt-1">{{ hero.time_badge_desc if hero.time_badge_desc else 'Centro, Campolim e região' }}</p>
+      </div>
+    </div>
+  </div>
+</section>

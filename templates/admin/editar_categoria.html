@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>{% if category %}Editar Categoria: {{ category.name }}{% else %}Nova Categoria{% endif %} - Painel Admin</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-slate-50 text-slate-800">
+  <div class="max-w-4xl mx-auto px-4 py-8">
+    <div class="mb-6">
+      <a href="{{ url_for('admin_dashboard') }}" class="text-sm text-[#0E4FCB] font-bold hover:underline">← Voltar para o Painel</a>
+      <h1 class="text-2xl font-black text-slate-800 mt-2">
+        {% if category %}Editar Categoria: {{ category.name }}{% else %}Nova Categoria para SEO Semântico{% endif %}
+      </h1>
+    </div>
+
+    <form method="POST" class="bg-white border rounded-2xl p-6 shadow-sm space-y-5">
+      <div class="grid md:grid-cols-2 gap-4">
+        <div>
+          <label for="name" class="block text-xs font-bold text-slate-600 uppercase mb-1">Nome da Categoria</label>
+          <input type="text" id="name" name="name" value="{{ category.name if category else '' }}" required placeholder="Ex: Geladeira" class="w-full border rounded-xl px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500">
+        </div>
+        <div>
+          <label for="slug" class="block text-xs font-bold text-slate-600 uppercase mb-1">Slug (URL amigável)</label>
+          <input type="text" id="slug" name="slug" value="{{ category.slug if category else '' }}" required placeholder="Ex: geladeira" class="w-full border rounded-xl px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500">
+        </div>
+      </div>
+
+      <div>
+        <label for="meta_description" class="block text-xs font-bold text-slate-600 uppercase mb-1">Meta Description (SEO)</label>
+        <input type="text" id="meta_description" name="meta_description" value="{{ category.meta_description if category else '' }}" required placeholder="Ex: Conserto profissional de geladeiras..." class="w-full border rounded-xl px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500">
+      </div>
+
+      <div>
+        <label for="description" class="block text-xs font-bold text-slate-600 uppercase mb-1">Descrição Detalhada da Categoria (Para SEO Semântico)</label>
+        <p class="text-[10px] text-slate-400 mb-1">Dica: Use <strong>[CITY]</strong> para que a rota substitua automaticamente pelo nome da cidade visitada (GEO).</p>
+        <textarea id="description" name="description" rows="5" required class="w-full border rounded-xl px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 leading-relaxed">{{ category.description if category else '' }}</textarea>
+      </div>
+
+      <!-- Bloco de 10 FAQs -->
+      <div class="border-t pt-4">
+        <h3 class="text-sm font-black text-[#0A1F44] uppercase mb-4">Estruturação de exatamente 10 FAQs (GEO Otimizadas)</h3>
+        <p class="text-xs text-slate-400 mb-4">Lembre-se de utilizar a marcação <strong>[CITY]</strong> para tornar a resposta geolocalizada automaticamente.</p>
+
+        <div class="space-y-4">
+          {% for i in range(1, 11) %}
+            {% set faq = category.faqs[i-1] if (category and category.faqs and category.faqs | length >= i) else None %}
+            <div class="bg-slate-50 p-4 border rounded-xl">
+              <p class="text-xs font-black text-[#0E4FCB] mb-2">FAQ {{ i }}</p>
+              <div class="space-y-2">
+                <input type="text" name="faq_q_{i}" value="{{ faq.q if faq else '' }}" placeholder="Pergunta {{ i }} (Ex: Quanto custa o conserto em [CITY]?)" class="w-full border rounded-xl px-4 py-2 text-xs focus:outline-none focus:ring-2 focus:ring-blue-500 bg-white">
+                <textarea name="faq_a_{i}" rows="2" placeholder="Resposta {{ i }}..." class="w-full border rounded-xl px-4 py-2 text-xs focus:outline-none focus:ring-2 focus:ring-blue-500 bg-white">{{ faq.a if faq else '' }}</textarea>
+              </div>
+            </div>
+          {% endfor %}
+        </div>
+      </div>
+
+      <div class="pt-4 border-t flex gap-3">
+        <button type="submit" class="bg-[#0E4FCB] hover:bg-blue-700 text-white font-bold px-6 py-3 rounded-xl shadow-md">
+          Salvar Categoria
+        </button>
+        <a href="{{ url_for('admin_dashboard') }}" class="bg-slate-100 hover:bg-slate-200 text-slate-600 font-bold px-6 py-3 rounded-xl text-center">
+          Cancelar
+        </a>
+      </div>
+    </form>
+  </div>
+</body>
+</html>

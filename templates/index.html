@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+
+{% block content %}
+  {% if sections.hero and sections.hero.active %}
+    {% include 'components/_hero.html' %}
+  {% endif %}
+
+  {% if sections.sobre and sections.sobre.active %}
+    {% include 'components/_sobre.html' %}
+  {% endif %}
+
+  {% include 'components/_servicos.html' %}
+
+  {% if sections.cobertura and sections.cobertura.active %}
+    {% include 'components/_cobertura.html' %}
+  {% endif %}
+
+  {% if sections.faq_home and sections.faq_home.active %}
+    {% include 'components/_faq.html' %}
+  {% endif %}
+{% endblock %}

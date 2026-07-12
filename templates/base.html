@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{% block title %}Autorizada Sorocaba Refrigeração 24H - Conserto em 90min{% endblock %}</title>
+  <meta name="description" content="Conserto de geladeira, máquina de lavar, freezer, frigobar e cervejeira em Sorocaba e região. Chegada 90min, garantia 90 dias, técnicos Wericles e Valdevino.">
+  <link rel="icon" type="image/png" href="{{ url_for('static', filename='img/facicon.png') }}">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>body{font-family:'Inter',system-ui,sans-serif}</style>
+</head>
+<body class="bg-[#F8FAFC] text-slate-800 antialiased">
+  {% include 'components/_header.html' %}
+  <main id="main-content">{% block content %}{% endblock %}</main>
+  {% include 'components/_footer.html' %}
+  <script src="{{ url_for('static', filename='js/main.js') }}" defer></script>
+</body>
+</html>

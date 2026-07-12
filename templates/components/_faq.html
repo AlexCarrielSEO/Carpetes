@@ -1,0 +1,80 @@
+{% set faq = sections.faq_home.content if (sections and sections.faq_home and sections.faq_home.content) else {} %}
+<section id="faq" class="bg-white border-y py-12" aria-labelledby="faq-title">
+  <div class="max-w-7xl mx-auto px-4">
+    <span class="bg-blue-50 text-[#0E4FCB] text-[10px] font-black px-2.5 py-1 rounded-full">
+      SEO SEMÂNTICO • GEO SOROCABA
+    </span>
+    <h2 id="faq-title" class="mt-2 text-3xl font-black text-[#0A1F44]">
+      {{ faq.title if faq.title else 'Tudo sobre conserto em Sorocaba: tire suas dúvidas' }}
+    </h2>
+    <p class="text-slate-500 text-xs mt-1">{{ faq.subtitle if faq.subtitle else 'Informação transparente direta dos técnicos.' }}</p>
+
+    <div class="mt-8 grid lg:grid-cols-12 gap-8 items-start">
+      <div class="lg:col-span-7 space-y-3">
+        {% if faq.q1 %}
+          <details open class="border bg-slate-50/50 rounded-xl p-4">
+            <summary class="font-bold cursor-pointer list-none flex justify-between items-center text-slate-800 hover:text-[#0E4FCB]">
+              <span>1. {{ faq.q1 }}</span>
+              <span>▼</span>
+            </summary>
+            <div class="pt-3 text-sm text-slate-600 leading-relaxed">{{ faq.a1 }}</div>
+          </details>
+        {% endif %}
+
+        {% if faq.q2 %}
+          <details class="border bg-slate-50/50 rounded-xl p-4">
+            <summary class="font-bold cursor-pointer list-none flex justify-between items-center text-slate-800 hover:text-[#0E4FCB]">
+              <span>2. {{ faq.q2 }}</span>
+              <span>▼</span>
+            </summary>
+            <div class="pt-3 text-sm text-slate-600 leading-relaxed">{{ faq.a2 }}</div>
+          </details>
+        {% endif %}
+
+        {% if faq.q3 %}
+          <details class="border bg-slate-50/50 rounded-xl p-4">
+            <summary class="font-bold cursor-pointer list-none flex justify-between items-center text-slate-800 hover:text-[#0E4FCB]">
+              <span>3. {{ faq.q3 }}</span>
+              <span>▼</span>
+            </summary>
+            <div class="pt-3 text-sm text-slate-600 leading-relaxed">{{ faq.a3 }}</div>
+          </details>
+        {% endif %}
+
+        {% if faq.q4 %}
+          <details class="border bg-slate-50/50 rounded-xl p-4">
+            <summary class="font-bold cursor-pointer list-none flex justify-between items-center text-slate-800 hover:text-[#0E4FCB]">
+              <span>4. {{ faq.q4 }}</span>
+              <span>▼</span>
+            </summary>
+            <div class="pt-3 text-sm text-slate-600 leading-relaxed">{{ faq.a4 }}</div>
+          </details>
+        {% endif %}
+
+        {% if faq.q5 %}
+          <details class="border bg-slate-50/50 rounded-xl p-4">
+            <summary class="font-bold cursor-pointer list-none flex justify-between items-center text-slate-800 hover:text-[#0E4FCB]">
+              <span>5. {{ faq.q5 }}</span>
+              <span>▼</span>
+            </summary>
+            <div class="pt-3 text-sm text-slate-600 leading-relaxed">{{ faq.a5 }}</div>
+          </details>
+        {% endif %}
+      </div>
+
+      <div class="lg:col-span-5 lg:sticky lg:top-[90px]">
+        <div class="bg-[#F8FBFF] border border-blue-100 rounded-[24px] p-6 text-center">
+          <img src="{{ url_for('static', filename='img/refrigeration_technician_portrait.webp') }}" alt="Técnicos Wericles e Valdevino" width="400" height="380" class="w-full h-[380px] object-cover rounded-2xl shadow-lg object-top">
+          <div class="mt-5 bg-white rounded-2xl p-4 border text-left">
+            <p class="text-sm font-bold text-[#0A1F44]">Atendimento rápido agora</p>
+            <p class="text-xs text-slate-500 mt-1">Eu e o Valdevino atendemos hoje. Mande uma mensagem no WhatsApp.</p>
+            <div class="mt-3 flex gap-2">
+              <span class="text-[10px] bg-green-50 text-green-700 px-2 py-1 rounded-full font-bold">● Online agora</span>
+              <span class="text-[10px] bg-blue-50 text-blue-700 px-2 py-1 rounded-full font-bold">Resposta em 5 min</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
