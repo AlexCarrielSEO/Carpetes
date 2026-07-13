@@ -1,0 +1,93 @@
+{% extends 'base.html' %}
+
+{% block title %}Conserto de {{ category.name }} em {{ city.name }} - Atendimento 24H{% endblock %}
+
+{% block content %}
+<div class="max-w-7xl mx-auto px-4 py-8">
+  <!-- Breadcrumbs para SEO Semântico -->
+  <nav class="text-xs text-slate-500 mb-6" aria-label="Breadcrumbs">
+    <ol class="flex gap-2">
+      <li><a href="/" class="hover:underline">Início</a></li>
+      <li>/</li>
+      <li><span class="text-slate-700">Conserto de {{ category.name }} em {{ city.name }}</span></li>
+    </ol>
+  </nav>
+
+  <div class="grid lg:grid-cols-12 gap-8 items-start">
+    <div class="lg:col-span-8">
+      <h1 class="text-3xl lg:text-4xl font-black text-[#0A1F44] leading-tight">
+        Conserto e Manutenção de <span class="text-[#0E4FCB]">{{ category.name }}</span> em <span class="text-[#0E4FCB]">{{ city.name }}</span>
+      </h1>
+      <p class="text-slate-500 text-xs font-semibold mt-2 uppercase tracking-wider">
+        SEO Semântico Localizado • Atendimento Urgente 24 Horas
+      </p>
+
+      <div class="mt-6 prose prose-slate text-slate-600 leading-relaxed space-y-4">
+        <p>{{ category.description | replace("[CITY]", city.name) }}</p>
+      </div>
+
+      <!-- Serviços Disponíveis na Categoria (Linkagem Interna SEO) -->
+      <h2 class="text-2xl font-black text-[#0A1F44] mt-10">Serviços Especializados Disponíveis</h2>
+      <div class="mt-4 grid md:grid-cols-2 gap-4">
+        {% for s in services %}
+          <div class="bg-white p-5 rounded-2xl border shadow-sm hover:shadow-md transition">
+            <h3 class="font-bold text-lg text-[#0A1F44]">{{ s.title }}</h3>
+            <p class="text-xs text-slate-500 mt-1">Atendimento imediato em {{ city.name }}</p>
+            <a href="{{ url_for('view_service', city_slug=city.slug, service_slug=s.slug) }}" class="inline-block mt-3 text-sm text-[#0E4FCB] font-bold hover:underline">
+              Ler artigo e ver preços →
+            </a>
+          </div>
+        {% endfor %}
+      </div>
+
+      <!-- 10 FAQs Otimizadas para a Categoria + GEO -->
+      <h2 class="text-2xl font-black text-[#0A1F44] mt-12 mb-6">Dúvidas Frequentes sobre {{ category.name }} em {{ city.name }}</h2>
+      <div class="space-y-3">
+        {% for faq in category.faqs %}
+          <details class="border bg-white rounded-xl p-4 transition duration-200">
+            <summary class="font-bold cursor-pointer list-none flex justify-between items-center text-slate-800 hover:text-[#0E4FCB]">
+              <span>{{ loop.index }}. {{ faq.q | replace_city(city.name) }}</span>
+              <span class="text-xs text-slate-400">▼</span>
+            </summary>
+            <p class="pt-3 text-sm text-slate-600 leading-relaxed">
+              {{ faq.a | replace_city(city.name) }}
+            </p>
+          </details>
+        {% endfor %}
+      </div>
+    </div>
+
+    <!-- Sidebar lateral de conversão e linkagem de cidades -->
+    <div class="lg:col-span-4 lg:sticky lg:top-[90px] space-y-6">
+      <div class="bg-white border rounded-[24px] p-6 shadow-sm">
+        <h3 class="font-black text-[#0A1F44] text-lg">Precisa de técnico em {{ city.name }}?</h3>
+        <p class="text-sm text-slate-500 mt-2">Nossa equipe de plantão está a postos para te atender em até 90 minutos.</p>
+        <div class="mt-4 p-3 bg-green-50 rounded-xl border border-green-100 flex items-center gap-3">
+          <span class="flex h-3.5 w-3.5 relative">
+            <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75"></span>
+            <span class="relative inline-flex rounded-full h-3.5 w-3.5 bg-green-500"></span>
+          </span>
+          <span class="text-xs font-bold text-green-800">Técnicos disponíveis agora</span>
+        </div>
+        <a href="#orcamento" class="block text-center mt-4 bg-[#0E4FCB] text-white font-bold py-3.5 rounded-full shadow-lg hover:bg-blue-700 transition">
+          Chamar Técnico Agora
+        </a>
+      </div>
+
+      <!-- Links para outras cidades (GEO SEO Network) -->
+      <div class="bg-white border rounded-[24px] p-6 shadow-sm">
+        <h4 class="font-bold text-[#0A1F44] text-sm uppercase tracking-wider mb-3">Outras cidades de atendimento:</h4>
+        <div class="grid grid-cols-2 gap-2">
+          {% for c in cidades %}
+            {% if c.slug != city.slug %}
+              <a href="{{ url_for('view_category', city_slug=c.slug, category_slug=category.slug) }}" class="text-xs text-slate-600 hover:text-[#0E4FCB] hover:underline py-1">
+                📍 {{ c.name }}
+              </a>
+            {% endif %}
+          {% endfor %}
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

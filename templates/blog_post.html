@@ -1,0 +1,51 @@
+{% extends 'base.html' %}
+
+{% block title %}{{ post.title }} - Blog Refrigeração Sorocaba{% endblock %}
+
+{% block content %}
+<div class="max-w-4xl mx-auto px-4 py-10">
+  <nav class="text-xs text-slate-500 mb-6" aria-label="Breadcrumbs">
+    <ol class="flex gap-2">
+      <li><a href="/" class="hover:underline">Início</a></li>
+      <li>/</li>
+      <li><a href="{{ url_for('blog_index') }}" class="hover:underline">Blog</a></li>
+      <li>/</li>
+      <li><span class="text-slate-700">{{ post.title }}</span></li>
+    </ol>
+  </nav>
+
+  <span class="bg-blue-50 text-[#0E4FCB] text-xs font-bold px-3 py-1 rounded-full">
+    ARTIGO DO BLOG
+  </span>
+  <h1 class="text-3xl lg:text-4xl font-black text-[#0A1F44] leading-tight mt-3">
+    {{ post.title }}
+  </h1>
+  <p class="text-xs text-slate-500 mt-2">Publicado em {{ post.created_at }} por <strong>Técnicos Wericles e Valdevino</strong></p>
+
+  <div class="mt-8 prose prose-blue max-w-none text-slate-700 leading-relaxed space-y-6">
+    <div class="whitespace-pre-line text-slate-600">
+      {{ post.content }}
+    </div>
+  </div>
+
+  <!-- Outros artigos recomendados para linkagem interna -->
+  {% if other_posts %}
+    <div class="mt-12 border-t pt-8">
+      <h3 class="font-black text-xl text-[#0A1F44]">Continue lendo nosso Blog:</h3>
+      <div class="grid md:grid-cols-2 gap-6 mt-4">
+        {% for op in other_posts %}
+          <div class="bg-[#F8FAFC] border p-5 rounded-2xl">
+            <h4 class="font-bold text-[#0A1F44] text-base hover:text-[#0E4FCB] transition">
+              <a href="{{ url_for('blog_post', post_slug=op.slug) }}">{{ op.title }}</a>
+            </h4>
+            <p class="text-xs text-slate-500 mt-1">{{ op.created_at }}</p>
+            <a href="{{ url_for('blog_post', post_slug=op.slug) }}" class="inline-block text-xs font-bold text-[#0E4FCB] mt-2 hover:underline">
+              Ler artigo →
+            </a>
+          </div>
+        {% endfor %}
+      </div>
+    </div>
+  {% endif %}
+</div>
+{% endblock %}

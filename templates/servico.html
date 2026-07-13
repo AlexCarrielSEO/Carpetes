@@ -1,0 +1,112 @@
+{% extends 'base.html' %}
+
+{% block title %}{{ service.title }} em {{ city.name }} - Técnicos Wericles e Valdevino{% endblock %}
+
+{% block content %}
+<div class="max-w-7xl mx-auto px-4 py-8">
+  <!-- Breadcrumbs para SEO Semântico -->
+  <nav class="text-xs text-slate-500 mb-6" aria-label="Breadcrumbs">
+    <ol class="flex gap-2">
+      <li><a href="/" class="hover:underline">Início</a></li>
+      <li>/</li>
+      <li><a href="{{ url_for('view_category', city_slug=city.slug, category_slug=category.slug) }}" class="hover:underline">{{ category.name }} em {{ city.name }}</a></li>
+      <li>/</li>
+      <li><span class="text-slate-700">{{ service.title }}</span></li>
+    </ol>
+  </nav>
+
+  <div class="grid lg:grid-cols-12 gap-8 items-start">
+    <div class="lg:col-span-8">
+      <div class="inline-flex bg-blue-50 text-[#0E4FCB] text-xs font-bold px-3 py-1 rounded-full mb-3">
+        15 ANOS DE EXPERIÊNCIA EM {{ city.name | upper }}
+      </div>
+
+      <h1 class="text-3xl lg:text-4xl font-black text-[#0A1F44] leading-tight">
+        {{ service.title }} em <span class="text-[#0E4FCB]">{{ city.name }}</span>
+      </h1>
+
+      <div class="mt-4 flex items-center gap-3 text-xs text-slate-500 border-b pb-4">
+        <span>Por <strong>Técnicos Wericles e Valdevino</strong></span>
+        <span>•</span>
+        <span>Atualizado em 2026</span>
+        <span>•</span>
+        <span class="bg-slate-100 px-2 py-0.5 rounded text-slate-700 font-bold">Conserto Garantido</span>
+      </div>
+
+      <!-- Artigo do Técnico -->
+      <article class="mt-6 prose prose-blue max-w-none text-slate-700 leading-relaxed space-y-6">
+        <div class="bg-[#F8FBFF] border-l-4 border-[#0E4FCB] p-4 rounded-r-xl italic text-slate-700">
+          "Atendimento rápido no local, orçamento justo e a segurança de quem atende Sorocaba e região há 15 anos de moto."
+        </div>
+
+        <!-- Renderiza o artigo com quebras de linha preservadas -->
+        <div class="whitespace-pre-line text-slate-600">{{ service.article | replace("[CITY]", city.name) }}</div>
+      </article>
+
+      <!-- Seção do Testemunho Visual -->
+      <div class="bg-gradient-to-r from-blue-900 to-slate-900 text-white rounded-[24px] p-6 mt-10 shadow-lg">
+        <h3 class="text-xl font-black">Nosso compromisso em {{ city.name }}:</h3>
+        <p class="text-sm text-blue-200 mt-2">Nós resolvemos na hora e você só paga após o teste final do equipamento!</p>
+        <div class="mt-4 grid md:grid-cols-3 gap-4">
+          <div class="bg-white/10 p-4 rounded-xl">
+            <p class="text-2xl">⚡</p>
+            <p class="font-bold text-sm mt-1">90 Minutos Chegada</p>
+            <p class="text-xs text-white/70">Atendimento rápido em qualquer bairro.</p>
+          </div>
+          <div class="bg-white/10 p-4 rounded-xl">
+            <p class="text-2xl">🛠️</p>
+            <p class="font-bold text-sm mt-1">Peças Originais</p>
+            <p class="text-xs text-white/70">Durabilidade e sem retornos de garantia.</p>
+          </div>
+          <div class="bg-white/10 p-4 rounded-xl">
+            <p class="text-2xl">📋</p>
+            <p class="font-bold text-sm mt-1">Garantia 90 Dias</p>
+            <p class="text-xs text-white/70">Termo de garantia por escrito no local.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- 10 FAQs por Artigo do Serviço -->
+      <h2 class="text-2xl font-black text-[#0A1F44] mt-12 mb-6">Perguntas Frequentes sobre {{ service.title }} em {{ city.name }}</h2>
+      <div class="space-y-3">
+        {% for faq in service.faqs %}
+          <details class="border bg-white rounded-xl p-4 transition duration-200">
+            <summary class="font-bold cursor-pointer list-none flex justify-between items-center text-slate-800 hover:text-[#0E4FCB]">
+              <span>{{ loop.index }}. {{ faq.q | replace_city(city.name) }}</span>
+              <span class="text-xs text-slate-400">▼</span>
+            </summary>
+            <p class="pt-3 text-sm text-slate-600 leading-relaxed">
+              {{ faq.a | replace_city(city.name) }}
+            </p>
+          </details>
+        {% endfor %}
+      </div>
+    </div>
+
+    <!-- Sidebar lateral -->
+    <div class="lg:col-span-4 lg:sticky lg:top-[90px] space-y-6">
+      <div class="bg-white border rounded-[24px] p-6 shadow-sm text-center">
+        <img src="{{ url_for('static', filename='img/refrigeration_technician_portrait.webp') }}" alt="Técnico Wericles" class="w-24 h-24 rounded-full mx-auto object-cover border-2 border-[#0E4FCB]">
+        <h3 class="font-bold text-lg text-[#0A1F44] mt-3">Técnico Wericles</h3>
+        <p class="text-xs text-slate-500 font-semibold">Técnico Sênior Responsável</p>
+        <p class="text-xs text-slate-600 mt-3 italic">"Eu e o Valdevino estamos em trânsito agora na região de {{ city.name }}. Mande seu endereço no WhatsApp para agendarmos uma visita rápida hoje!"</p>
+        <a href="https://wa.me/5515991340446" target="_blank" class="block w-full mt-4 bg-[#25D366] text-white font-black py-3 rounded-full hover:bg-green-600 transition">
+          Chamar no WhatsApp 24H
+        </a>
+      </div>
+
+      <!-- Outras Opções de Serviços -->
+      <div class="bg-white border rounded-[24px] p-6 shadow-sm">
+        <h4 class="font-bold text-[#0A1F44] text-xs uppercase tracking-wider mb-3">Outros serviços de refrigeração:</h4>
+        <div class="space-y-3">
+          {% for os in other_services %}
+            <a href="{{ url_for('view_service', city_slug=city.slug, service_slug=os.slug) }}" class="block text-sm font-semibold text-[#0A1F44] hover:text-[#0E4FCB] hover:underline">
+              → {{ os.title }} em {{ city.name }}
+            </a>
+          {% endfor %}
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

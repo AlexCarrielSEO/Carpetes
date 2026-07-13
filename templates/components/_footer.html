@@ -1,0 +1,91 @@
+{% set foot = sections.footer.content if (sections and sections.footer and sections.footer.content) else {} %}
+<footer id="orcamento" class="bg-[#0A1F44] text-white mt-10">
+  <div class="max-w-7xl mx-auto px-4 py-12 grid lg:grid-cols-12 gap-10">
+    <div class="lg:col-span-5">
+      <div class="flex items-center gap-3">
+        <img src="{{ url_for('static', filename='img/facicon.png') }}" alt="Ícone" width="40" height="40" class="w-10 h-10 rounded-xl bg-white p-1.5">
+        <div>
+          <p class="font-black">AUTORIZADA SOROCABA</p>
+          <p class="text-[10px] tracking-[0.2em] text-blue-300 font-bold">REFRIGERAÇÃO 24H</p>
+        </div>
+      </div>
+      <p class="mt-4 text-sm text-white/70">
+        {{ foot.contact_subtitle if foot.contact_subtitle else 'Frota própria, Wericles e Valdevino, peças originais e garantia.' }}
+      </p>
+      <address class="mt-6 not-italic text-sm text-white/80">
+        <p>Base: {{ foot.address if foot.address else 'Rua Monsenhor João Soares, 648 - Sorocaba/SP' }}</p>
+        <p>WhatsApp: {{ foot.phone if foot.phone else '(15) 99134-0446' }}</p>
+      </address>
+    </div>
+
+    <div class="lg:col-span-7">
+      <div class="bg-white rounded-[20px] p-6 text-slate-800 shadow-xl">
+        <h3 class="font-black text-[#0A1F44] text-lg">
+          {{ foot.contact_title if foot.contact_title else 'Solicite seu técnico agora' }}
+        </h3>
+        <form id="whats-form" onsubmit="sendWhatsApp(event)" class="mt-4 grid grid-cols-1 md:grid-cols-2 gap-3">
+          <label class="sr-only" for="nome">Nome</label>
+          <input id="nome" name="nome" required placeholder="Seu nome" class="w-full border rounded-xl px-4 py-3 text-sm">
+
+          <label class="sr-only" for="whats">WhatsApp</label>
+          <input id="whats" name="whats" required placeholder="WhatsApp" class="w-full border rounded-xl px-4 py-3 text-sm">
+
+          <label class="sr-only" for="bairro">Bairro</label>
+          <select id="bairro" name="bairro" class="w-full border rounded-xl px-4 py-3 text-sm bg-white">
+            <option>Centro</option>
+            <option>Campolim</option>
+            <option>Wanel Ville</option>
+            <option>Votorantim</option>
+            <option>Itu</option>
+            <option>Salto</option>
+            <option>Araçoiaba</option>
+            <option>Iperó</option>
+            <option>Piedade</option>
+            <option>Alumínio</option>
+          </select>
+
+          <label class="sr-only" for="equip">Equipamento</label>
+          <select id="equip" name="equip" class="w-full border rounded-xl px-4 py-3 text-sm bg-white">
+            <option>Geladeira</option>
+            <option>Máquina de Lavar</option>
+            <option>Freezer</option>
+            <option>Frigobar</option>
+            <option>Cervejeira</option>
+            <option>Adega de Vinhos</option>
+          </select>
+
+          <label class="sr-only" for="msg">Mensagem</label>
+          <textarea id="msg" name="msg" placeholder="Qual o defeito do aparelho?" class="md:col-span-2 w-full border rounded-xl px-4 py-3 text-sm h-[80px]"></textarea>
+
+          <button type="submit" class="md:col-span-2 bg-[#25D366] hover:bg-green-600 transition text-white font-black py-3.5 rounded-xl text-center shadow-md">
+            Enviar para WhatsApp 24H
+          </button>
+        </form>
+      </div>
+    </div>
+  </div>
+  <div class="border-t border-white/10 py-4 text-center text-[11px] text-white/40">
+    {{ foot.copyright if foot.copyright else '© 2026 Autorizada Sorocaba - Wericles e Valdevino' }}
+  </div>
+</footer>
+
+<script>
+function sendWhatsApp(e) {
+  e.preventDefault();
+  const nome = document.getElementById('nome').value;
+  const whats = document.getElementById('whats').value;
+  const bairro = document.getElementById('bairro').value;
+  const equip = document.getElementById('equip').value;
+  const msg = document.getElementById('msg').value;
+
+  // Constrói o texto do WhatsApp de forma amigável
+  const texto = `Olá, me chamo ${nome}. Gostaria de solicitar um técnico de refrigeração.\n\n` +
+                `📍 Bairro/Cidade: ${bairro}\n` +
+                `⚙️ Equipamento: ${equip}\n` +
+                `🔧 Defeito: ${msg}\n\n` +
+                `WhatsApp de contato: ${whats}`;
+
+  const url = `https://wa.me/5515991340446?text=${encodeURIComponent(texto)}`;
+  window.open(url, '_blank');
+}
+</script>

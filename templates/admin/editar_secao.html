@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Editar Seção: {{ section.name }} - Painel Admin</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-slate-50 text-slate-800">
+  <div class="max-w-4xl mx-auto px-4 py-8">
+    <div class="mb-6 flex items-center justify-between">
+      <div>
+        <a href="{{ url_for('admin_dashboard') }}" class="text-sm text-[#0E4FCB] font-bold hover:underline">← Voltar para o Painel</a>
+        <h1 class="text-2xl font-black text-slate-800 mt-2">Editar Seção: {{ section.name }}</h1>
+      </div>
+    </div>
+
+    <form method="POST" class="bg-white border rounded-2xl p-6 shadow-sm space-y-5">
+      <!-- Configurações básicas da seção -->
+      <div class="grid grid-cols-2 gap-4 border-b pb-4">
+        <div>
+          <label for="order" class="block text-xs font-bold text-slate-600 uppercase mb-1">Ordem de Exibição</label>
+          <input type="number" id="order" name="order" value="{{ section.order }}" required class="w-full border rounded-xl px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500">
+        </div>
+        <div class="flex items-center h-full pt-6">
+          <label class="flex items-center gap-2 cursor-pointer">
+            <input type="checkbox" name="active" class="w-4 h-4 text-blue-600 rounded" {% if section.active %}checked{% endif %}>
+            <span class="text-xs font-bold text-slate-600 uppercase">Seção Ativa na Página Inicial</span>
+          </label>
+        </div>
+      </div>
+
+      <!-- Conteúdo dinâmico dependendo das chaves existentes no MongoDB -->
+      <div>
+        <h3 class="text-sm font-black text-slate-700 uppercase tracking-wider mb-4 border-b pb-1">Campos de Texto e Imagem</h3>
+        <div class="space-y-4">
+          {% for key, val in section.content.items() %}
+            <div>
+              <label for="{{ key }}" class="block text-xs font-bold text-slate-500 uppercase mb-1">{{ key | replace('_', ' ') }}</label>
+
+              {% if val | length > 120 %}
+                <textarea id="{{ key }}" name="{{ key }}" rows="5" required class="w-full border rounded-xl px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 leading-relaxed">{{ val }}</textarea>
+              {% else %}
+                <input type="text" id="{{ key }}" name="{{ key }}" value="{{ val }}" required class="w-full border rounded-xl px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500">
+              {% endif %}
+            </div>
+          {% endfor %}
+        </div>
+      </div>
+
+      <div class="pt-4 border-t flex gap-3">
+        <button type="submit" class="bg-[#0E4FCB] hover:bg-blue-700 text-white font-bold px-6 py-3 rounded-xl shadow-md">
+          Salvar Alterações de Layout
+        </button>
+        <a href="{{ url_for('admin_dashboard') }}" class="bg-slate-100 hover:bg-slate-200 text-slate-600 font-bold px-6 py-3 rounded-xl text-center">
+          Cancelar
+        </a>
+      </div>
+    </form>
+  </div>
+</body>
+</html>

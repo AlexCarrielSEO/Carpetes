@@ -1,0 +1,24 @@
+<header class="sticky top-0 z-40 bg-white/95 backdrop-blur border-b border-slate-200">
+  <div class="max-w-7xl mx-auto px-4 h-[72px] flex items-center justify-between">
+    <a href="/" class="flex items-center gap-3" aria-label="Início">
+      <img src="{{ url_for('static', filename='img/facicon.png') }}" alt="Ícone Autorizada Sorocaba" width="40" height="40" class="w-10 h-10 rounded-xl bg-[#0A1F44] p-1.5 object-contain">
+      <span class="leading-tight">
+        <span class="block font-black text-[#0A1F44] text-[14px] md:text-[15px]">AUTORIZADA SOROCABA</span>
+        <span class="block text-[9px] md:text-[10px] font-bold tracking-[0.2em] text-[#0E4FCB]">REFRIGERAÇÃO 24H</span>
+      </span>
+    </a>
+
+    <nav class="hidden md:flex gap-5 lg:gap-6 text-sm font-semibold text-slate-600" aria-label="Navegação">
+      <a href="/#servicos" class="hover:text-[#0E4FCB] transition">Serviços Home</a>
+      <a href="{{ url_for('view_category', city_slug='sorocaba', category_slug='geladeira') }}" class="hover:text-[#0E4FCB] transition">Geladeiras</a>
+      <a href="{{ url_for('view_category', city_slug='sorocaba', category_slug='maquina-de-lavar') }}" class="hover:text-[#0E4FCB] transition">Lavadoras</a>
+      <a href="{{ url_for('blog_index') }}" class="hover:text-[#0E4FCB] transition font-bold text-blue-600">Blog do Técnico</a>
+      <a href="/#cobertura" class="hover:text-[#0E4FCB] transition">Cobertura</a>
+      <a href="/admin/login" class="hover:text-[#0E4FCB] transition text-xs border border-slate-300 rounded-full px-2.5 py-0.5">Admin</a>
+    </nav>
+
+    <a href="https://wa.me/5515991340446" target="_blank" class="bg-[#0E4FCB] text-white px-4 md:px-5 py-2.5 rounded-full font-bold text-xs md:text-sm shadow hover:bg-blue-700 transition">
+      Chamar no WhatsApp
+    </a>
+  </div>
+</header>

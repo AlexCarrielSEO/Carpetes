@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Painel do Admin - Refrigeração Sorocaba</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-slate-50 text-slate-800">
+  <header class="bg-[#0A1F44] text-white">
+    <div class="max-w-7xl mx-auto px-4 h-[72px] flex items-center justify-between">
+      <div class="flex items-center gap-3">
+        <span class="leading-tight">
+          <span class="block font-black text-[15px]">PAINEL ADMIN</span>
+          <span class="block text-[9px] font-bold tracking-[0.2em] text-blue-300">SOROCABA REFRIGERAÇÃO</span>
+        </span>
+      </div>
+      <div class="flex items-center gap-4">
+        <a href="/" target="_blank" class="text-xs bg-white/10 hover:bg-white/20 px-3.5 py-1.5 rounded-full font-bold">Ver Site Principal</a>
+        <a href="{{ url_for('admin_logout') }}" class="text-xs bg-red-600 hover:bg-red-700 px-3.5 py-1.5 rounded-full font-bold">Sair</a>
+      </div>
+    </div>
+  </header>
+
+  <main class="max-w-7xl mx-auto px-4 py-8">
+    {% with messages = get_flashed_messages(with_categories=true) %}
+      {% if messages %}
+        {% for category, message in messages %}
+          <div class="mb-6 p-4 rounded-xl text-sm font-bold {% if category == 'success' %}bg-green-50 text-green-700 border border-green-100{% else %}bg-blue-50 text-blue-700 border border-blue-100{% endif %}">
+            {{ message }}
+          </div>
+        {% endfor %}
+      {% endif %}
+    {% endwith %}
+
+    <!-- Resumo Geral -->
+    <div class="grid grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
+      <div class="bg-white border p-5 rounded-2xl shadow-sm">
+        <p class="text-xs font-bold text-slate-500 uppercase">Seções de Layout</p>
+        <p class="text-3xl font-black text-slate-800 mt-1">{{ sections_count }}</p>
+      </div>
+      <div class="bg-white border p-5 rounded-2xl shadow-sm">
+        <p class="text-xs font-bold text-slate-500 uppercase">Categorias SEO</p>
+        <p class="text-3xl font-black text-slate-800 mt-1">{{ categories_count }}</p>
+      </div>
+      <div class="bg-white border p-5 rounded-2xl shadow-sm">
+        <p class="text-xs font-bold text-slate-500 uppercase">Serviços / Artigos</p>
+        <p class="text-3xl font-black text-slate-800 mt-1">{{ services_count }}</p>
+      </div>
+      <div class="bg-white border p-5 rounded-2xl shadow-sm">
+        <p class="text-xs font-bold text-slate-500 uppercase">Artigos do Blog</p>
+        <p class="text-3xl font-black text-slate-800 mt-1">{{ posts_count }}</p>
+      </div>
+    </div>
+
+    <!-- Navegação de Abas -->
+    <div class="border-b border-slate-200 mb-6 flex gap-4 overflow-x-auto pb-1" id="tabs">
+      <button onclick="switchTab('layout')" id="tab-layout" class="tab-btn px-4 py-2 font-bold text-sm border-b-2 border-blue-600 text-blue-600 whitespace-nowrap">
+        🏠 Aba de Layout da Home
+      </button>
+      <button onclick="switchTab('categories')" id="tab-categories" class="tab-btn px-4 py-2 font-bold text-sm border-b-2 border-transparent text-slate-500 whitespace-nowrap hover:text-slate-700">
+        📁 Categorias (SEO + 10 FAQs)
+      </button>
+      <button onclick="switchTab('services')" id="tab-services" class="tab-btn px-4 py-2 font-bold text-sm border-b-2 border-transparent text-slate-500 whitespace-nowrap hover:text-slate-700">
+        🛠️ Serviços do Técnico (Artigo + 10 FAQs)
+      </button>
+      <button onclick="switchTab('blog')" id="tab-blog" class="tab-btn px-4 py-2 font-bold text-sm border-b-2 border-transparent text-slate-500 whitespace-nowrap hover:text-slate-700">
+        📝 Blog (Semântico & GEO)
+      </button>
+    </div>
+
+    <!-- ABA 1: LAYOUT DA HOME -->
+    <div id="content-layout" class="tab-content space-y-4">
+      <div class="bg-white border rounded-2xl p-6 shadow-sm">
+        <h2 class="text-lg font-black text-slate-800 mb-1">Seções Editáveis da Página Inicial</h2>
+        <p class="text-xs text-slate-500 mb-4">Você pode ativar, desativar, reordenar ou editar o conteúdo de cada bloco visual da Home.</p>
+        <div class="space-y-3">
+          {% for sec in sections_list %}
+            <div class="flex items-center justify-between p-4 bg-slate-50 border rounded-xl hover:bg-slate-100/70 transition">
+              <div>
+                <span class="text-xs font-bold text-slate-400">Ordem: {{ sec.order }}</span>
+                <h3 class="font-bold text-slate-800 text-sm mt-0.5">{{ sec.name }}</h3>
+                <span class="text-[10px] uppercase font-bold px-2 py-0.5 rounded-full {% if sec.active %}bg-green-100 text-green-700{% else %}bg-red-100 text-red-700{% endif %}">
+                  {% if sec.active %}Ativo{% else %}Inativo{% endif %}
+                </span>
+              </div>
+              <a href="{{ url_for('admin_editar_secao', section_id=sec.section_id) }}" class="bg-blue-600 hover:bg-blue-700 text-white text-xs font-bold px-4 py-2 rounded-lg">
+                Editar Layout
+              </a>
+            </div>
+          {% endfor %}
+        </div>
+      </div>
+    </div>
+
+    <!-- ABA 2: CATEGORIAS -->
+    <div id="content-categories" class="tab-content hidden space-y-4">
+      <div class="bg-white border rounded-2xl p-6 shadow-sm">
+        <div class="flex items-center justify-between mb-4">
+          <div>
+            <h2 class="text-lg font-black text-slate-800">Categorias SEO</h2>
+            <p class="text-xs text-slate-500">Mapeamento de eletrodomésticos com 10 FAQs otimizadas de SEO Semântico + GEO cada.</p>
+          </div>
+          <a href="{{ url_for('admin_nova_categoria') }}" class="bg-[#0E4FCB] hover:bg-blue-700 text-white text-xs font-bold px-4 py-2.5 rounded-lg">
+            + Nova Categoria
+          </a>
+        </div>
+
+        <div class="space-y-3">
+          {% for cat in categories_list %}
+            <div class="flex items-center justify-between p-4 bg-slate-50 border rounded-xl">
+              <div>
+                <h3 class="font-bold text-slate-800 text-sm">{{ cat.name }}</h3>
+                <p class="text-xs text-slate-400">Slug: /categoria/[cidade]/{{ cat.slug }}</p>
+                <p class="text-xs text-blue-600 font-semibold mt-1">✓ Possui exatamente {{ cat.faqs | length }} FAQs para SEO</p>
+              </div>
+              <div class="flex gap-2">
+                <a href="{{ url_for('admin_editar_categoria', category_id=cat._id) }}" class="bg-slate-200 hover:bg-slate-300 text-slate-700 text-xs font-bold px-3 py-2 rounded-lg">
+                  Editar
+                </a>
+                <a href="{{ url_for('admin_deletar_categoria', category_id=cat._id) }}" onclick="return confirm('Tem certeza que deseja deletar?')" class="bg-red-600 hover:bg-red-700 text-white text-xs font-bold px-3 py-2 rounded-lg">
+                  Excluir
+                </a>
+              </div>
+            </div>
+          {% endfor %}
+        </div>
+      </div>
+    </div>
+
+    <!-- ABA 3: SERVIÇOS -->
+    <div id="content-services" class="tab-content hidden space-y-4">
+      <div class="bg-white border rounded-2xl p-6 shadow-sm">
+        <div class="flex items-center justify-between mb-4">
+          <div>
+            <h2 class="text-lg font-black text-slate-800">Serviços e Artigos Técnicos</h2>
+            <p class="text-xs text-slate-500">Artigos completos com o testemunho de 15 anos de mercado e 10 FAQs customizadas de GEO por serviço.</p>
+          </div>
+          <a href="{{ url_for('admin_novo_servico') }}" class="bg-[#0E4FCB] hover:bg-blue-700 text-white text-xs font-bold px-4 py-2.5 rounded-lg">
+            + Novo Serviço
+          </a>
+        </div>
+
+        <div class="space-y-3">
+          {% for serv in services_list %}
+            <div class="flex items-center justify-between p-4 bg-slate-50 border rounded-xl">
+              <div>
+                <h3 class="font-bold text-slate-800 text-sm">{{ serv.title }}</h3>
+                <p class="text-xs text-slate-400">Slug: /servico/[cidade]/{{ serv.slug }}</p>
+                <p class="text-xs text-blue-600 font-semibold mt-1">✓ Possui exatamente {{ serv.faqs | length }} FAQs para SEO</p>
+              </div>
+              <div class="flex gap-2">
+                <a href="{{ url_for('admin_editar_servico', service_id=serv._id) }}" class="bg-slate-200 hover:bg-slate-300 text-slate-700 text-xs font-bold px-3 py-2 rounded-lg">
+                  Editar
+                </a>
+                <a href="{{ url_for('admin_deletar_servico', service_id=serv._id) }}" onclick="return confirm('Tem certeza que deseja deletar?')" class="bg-red-600 hover:bg-red-700 text-white text-xs font-bold px-3 py-2 rounded-lg">
+                  Excluir
+                </a>
+              </div>
+            </div>
+          {% endfor %}
+        </div>
+      </div>
+    </div>
+
+    <!-- ABA 4: BLOG -->
+    <div id="content-blog" class="tab-content hidden space-y-4">
+      <div class="bg-white border rounded-2xl p-6 shadow-sm">
+        <div class="flex items-center justify-between mb-4">
+          <div>
+            <h2 class="text-lg font-black text-slate-800">Artigos do Blog</h2>
+            <p class="text-xs text-slate-500">Conteúdo semântico e dicas técnicas com viés regional para otimizar os rankings locais do site.</p>
+          </div>
+          <a href="{{ url_for('admin_novo_blog') }}" class="bg-[#0E4FCB] hover:bg-blue-700 text-white text-xs font-bold px-4 py-2.5 rounded-lg">
+            + Nova Postagem
+          </a>
+        </div>
+
+        <div class="space-y-3">
+          {% for post in posts_list %}
+            <div class="flex items-center justify-between p-4 bg-slate-50 border rounded-xl">
+              <div>
+                <h3 class="font-bold text-slate-800 text-sm">{{ post.title }}</h3>
+                <p class="text-xs text-slate-400">Slug: /blog/{{ post.slug }}</p>
+                <p class="text-xs text-slate-400">Data: {{ post.created_at }}</p>
+              </div>
+              <div class="flex gap-2">
+                <a href="{{ url_for('admin_editar_blog', post_id=post._id) }}" class="bg-slate-200 hover:bg-slate-300 text-slate-700 text-xs font-bold px-3 py-2 rounded-lg">
+                  Editar
+                </a>
+                <a href="{{ url_for('admin_deletar_blog', post_id=post._id) }}" onclick="return confirm('Tem certeza que deseja deletar?')" class="bg-red-600 hover:bg-red-700 text-white text-xs font-bold px-3 py-2 rounded-lg">
+                  Excluir
+                </a>
+              </div>
+            </div>
+          {% endfor %}
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <script>
+    function switchTab(tabName) {
+      // Oculta todos os blocos de conteúdo de aba
+      document.querySelectorAll('.tab-content').forEach(el => el.classList.add('hidden'));
+      // Remove o estilo ativo de todos os botões de aba
+      document.querySelectorAll('.tab-btn').forEach(btn => {
+        btn.classList.remove('border-blue-600', 'text-blue-600');
+        btn.classList.add('border-transparent', 'text-slate-500');
+      });
+
+      // Exibe o conteúdo da aba selecionada
+      document.getElementById('content-' + tabName).classList.remove('hidden');
+      // Define o estilo ativo no botão selecionado
+      const activeBtn = document.getElementById('tab-' + tabName);
+      activeBtn.classList.remove('border-transparent', 'text-slate-500');
+      activeBtn.classList.add('border-blue-600', 'text-blue-600');
+
+      // Guarda a aba selecionada no LocalStorage para não perder ao recarregar após salvar
+      localStorage.setItem('active_admin_tab', tabName);
+    }
+
+    // Carrega a aba ativa salva ao carregar a página
+    window.onload = function() {
+      const savedTab = localStorage.getItem('active_admin_tab');
+      if (savedTab) {
+        switchTab(savedTab);
+      }
+    };
+  </script>
+</body>
+</html>

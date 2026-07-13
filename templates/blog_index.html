@@ -1,0 +1,39 @@
+{% extends 'base.html' %}
+
+{% block title %}Blog Autorizada Sorocaba - Dicas de Refrigeração e Linha Branca{% endblock %}
+
+{% block content %}
+<div class="max-w-7xl mx-auto px-4 py-10">
+  <span class="bg-blue-50 text-[#0E4FCB] text-xs font-bold px-3 py-1 rounded-full">
+    SEO SEMÂNTICO & DICAS DE ESPECIALISTAS
+  </span>
+  <h1 class="text-3xl lg:text-5xl font-black text-[#0A1F44] leading-tight mt-3">
+    Blog da Refrigeração Sorocaba
+  </h1>
+  <p class="text-slate-600 mt-2 max-w-2xl text-lg">
+    Confira dicas exclusivas, guias de manutenção preventiva e segredos práticos dos técnicos Wericles e Valdevino para aumentar a durabilidade dos seus aparelhos.
+  </p>
+
+  <!-- Lista de Artigos do Blog -->
+  <div class="mt-10 grid md:grid-cols-2 gap-8">
+    {% for post in posts %}
+      <article class="bg-white rounded-[24px] border shadow-sm overflow-hidden hover:shadow-md transition duration-200">
+        <div class="p-6 md:p-8">
+          <p class="text-xs text-[#0E4FCB] font-bold">{{ post.created_at }} • BLOG SEO</p>
+          <h2 class="text-xl md:text-2xl font-black text-[#0A1F44] mt-2 hover:text-[#0E4FCB] transition">
+            <a href="{{ url_for('blog_post', post_slug=post.slug) }}">{{ post.title }}</a>
+          </h2>
+          <p class="text-sm text-slate-500 mt-3 leading-relaxed">
+            {{ post.summary }}
+          </p>
+          <div class="mt-6">
+            <a href="{{ url_for('blog_post', post_slug=post.slug) }}" class="text-sm font-bold text-[#0E4FCB] hover:underline">
+              Ler artigo completo →
+            </a>
+          </div>
+        </div>
+      </article>
+    {% endfor %}
+  </div>
+</div>
+{% endblock %}
