@@ -94,7 +94,12 @@ const Header = ({
         </div>
 
         {/* Mobile Menu Button */}
-        <Button variant="ghost" size="icon" className="md:hidden">
+        <Button
+          variant="ghost"
+          size="icon"
+          className="md:hidden"
+          aria-label="Abrir menu de navegação"
+        >
           <Menu className="h-6 w-6" />
         </Button>
       </div>
