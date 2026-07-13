@@ -58,6 +58,7 @@ const Header = () => {
           <select
             value={selectedCategory}
             onChange={(e) => setSelectedCategory(e.target.value)}
+            aria-label="Selecionar categoria de carpete"
             className="appearance-none bg-gray-100 border border-gray-300 rounded-md py-2 pl-4 pr-10 text-gray-700 cursor-pointer focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent"
           >
             {categories.map((category) => (
@@ -85,8 +86,10 @@ const Header = () => {
         </div>
 
         <button
-          className="md:hidden text-gray-700"
+          className="md:hidden text-gray-700 hover:text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 rounded-sm transition-all"
           onClick={() => setIsMenuOpen(!isMenuOpen)}
+          aria-expanded={isMenuOpen}
+          aria-label={isMenuOpen ? "Fechar menu de navegação" : "Abrir menu de navegação"}
         >
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -133,6 +136,7 @@ const Header = () => {
                 <select
                   value={selectedCategory}
                   onChange={(e) => setSelectedCategory(e.target.value)}
+                  aria-label="Selecionar categoria de carpete"
                   className="w-full appearance-none bg-gray-100 border border-gray-300 rounded-md py-2 pl-4 pr-10 text-gray-700 cursor-pointer focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent"
                 >
                   {categories.map((category) => (
