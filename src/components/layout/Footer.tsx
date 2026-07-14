@@ -216,6 +216,7 @@ const Footer = ({
                 href={socialLinks.facebook}
                 target="_blank"
                 rel="noopener noreferrer"
+                aria-label="Acessar nossa página do Facebook"
                 className="bg-slate-800 p-2 rounded-full hover:bg-primary transition-colors"
               >
                 <Facebook className="h-5 w-5" />
@@ -224,6 +225,7 @@ const Footer = ({
                 href={socialLinks.instagram}
                 target="_blank"
                 rel="noopener noreferrer"
+                aria-label="Acessar nosso perfil do Instagram"
                 className="bg-slate-800 p-2 rounded-full hover:bg-primary transition-colors"
               >
                 <Instagram className="h-5 w-5" />
@@ -232,6 +234,7 @@ const Footer = ({
                 href={socialLinks.twitter}
                 target="_blank"
                 rel="noopener noreferrer"
+                aria-label="Acessar nosso perfil do Twitter"
                 className="bg-slate-800 p-2 rounded-full hover:bg-primary transition-colors"
               >
                 <Twitter className="h-5 w-5" />
@@ -240,6 +243,7 @@ const Footer = ({
                 href={socialLinks.linkedin}
                 target="_blank"
                 rel="noopener noreferrer"
+                aria-label="Acessar nosso perfil do LinkedIn"
                 className="bg-slate-800 p-2 rounded-full hover:bg-primary transition-colors"
               >
                 <Linkedin className="h-5 w-5" />
