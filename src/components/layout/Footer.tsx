@@ -167,7 +167,11 @@ const Footer = ({
                 >
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                     <div>
+                      <label htmlFor="footer-contact-name" className="sr-only">
+                        Seu Nome
+                      </label>
                       <Input
+                        id="footer-contact-name"
                         type="text"
                         placeholder="Seu Nome"
                         required
@@ -175,7 +179,11 @@ const Footer = ({
                       />
                     </div>
                     <div>
+                      <label htmlFor="footer-contact-email" className="sr-only">
+                        Seu Email
+                      </label>
                       <Input
+                        id="footer-contact-email"
                         type="email"
                         placeholder="Seu Email"
                         required
@@ -184,7 +192,11 @@ const Footer = ({
                     </div>
                   </div>
                   <div>
+                    <label htmlFor="footer-contact-subject" className="sr-only">
+                      Assunto
+                    </label>
                     <Input
+                      id="footer-contact-subject"
                       type="text"
                       placeholder="Assunto"
                       required
@@ -192,7 +204,11 @@ const Footer = ({
                     />
                   </div>
                   <div>
+                    <label htmlFor="footer-contact-message" className="sr-only">
+                      Sua Mensagem
+                    </label>
                     <Textarea
+                      id="footer-contact-message"
                       placeholder="Sua Mensagem"
                       rows={4}
                       required

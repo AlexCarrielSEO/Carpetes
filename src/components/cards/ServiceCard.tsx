@@ -45,8 +45,9 @@ const ServiceCard = ({
           variant="outline"
           className="w-full justify-between group hover:bg-primary hover:text-white transition-colors"
           onClick={() => (window.location.href = detailsUrl)}
+          aria-label={`Ver detalhes sobre o serviço de ${title}`}
         >
-          View Details
+          Ver Detalhes
           <ArrowRight className="h-4 w-4 ml-2 group-hover:translate-x-1 transition-transform" />
         </Button>
       </CardFooter>
