@@ -59,12 +59,15 @@ export default function ServiceAreaSection({
                   value={zipCode}
                   onChange={(e) => setZipCode(e.target.value)}
                   className="max-w-xs"
+                  aria-label="CEP para verificação de cobertura"
                 />
                 <Button type="submit">Verificar</Button>
               </form>
 
               {zipCodeResult !== null && (
                 <div
+                  role="status"
+                  aria-live="polite"
                   className={`mt-4 p-4 rounded-md ${zipCodeResult ? "bg-green-100 text-green-800" : "bg-red-100 text-red-800"}`}
                 >
                   {zipCodeResult
@@ -85,11 +88,16 @@ export default function ServiceAreaSection({
                   onChange={(e) => setEmail(e.target.value)}
                   required
                   className="flex-grow"
+                  aria-label="Endereço de email para assinatura da newsletter"
                 />
                 <Button type="submit">Assinar</Button>
               </form>
               {isSubscribed && (
-                <div className="mt-4 p-3 bg-green-100 text-green-800 rounded-md">
+                <div
+                  role="status"
+                  aria-live="polite"
+                  className="mt-4 p-3 bg-green-100 text-green-800 rounded-md"
+                >
                   Obrigado por assinar nossa newsletter!
                 </div>
               )}
