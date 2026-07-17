@@ -1,0 +1,3 @@
+## 2026-07-17 - Acessibilidade em Botões de Ação com Ícones Únicos
+**Learning:** Elementos de ação/botões interativos compostos exclusivamente por ícones visuais prejudicam significativamente a experiência de usuários que navegam por leitores de tela ou teclado se não houver rótulos textuais associados. A aplicação de atributos `aria-label` combinada com o componente `Tooltip` (com trigger acessível) do Radix UI restaura a acessibilidade, ao mesmo tempo que adiciona um toque sutil de micro-UX (tooltips com atraso de hover sutil e transições suaves).
+**Action:** Sempre envolver botões baseados exclusivamente em ícones em `Tooltip` do Radix UI, especificando atributos `aria-label` idênticos ou equivalentes ao conteúdo descritivo textual do tooltip.
