@@ -59,6 +59,7 @@ const Header = () => {
             value={selectedCategory}
             onChange={(e) => setSelectedCategory(e.target.value)}
             className="appearance-none bg-gray-100 border border-gray-300 rounded-md py-2 pl-4 pr-10 text-gray-700 cursor-pointer focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent"
+            aria-label="Selecionar categoria de carpete"
           >
             {categories.map((category) => (
               <option key={category} value={category}>
@@ -87,6 +88,8 @@ const Header = () => {
         <button
           className="md:hidden text-gray-700"
           onClick={() => setIsMenuOpen(!isMenuOpen)}
+          aria-label={isMenuOpen ? "Fechar menu de navegação" : "Abrir menu de navegação"}
+          aria-expanded={isMenuOpen}
         >
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -134,6 +137,7 @@ const Header = () => {
                   value={selectedCategory}
                   onChange={(e) => setSelectedCategory(e.target.value)}
                   className="w-full appearance-none bg-gray-100 border border-gray-300 rounded-md py-2 pl-4 pr-10 text-gray-700 cursor-pointer focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent"
+                  aria-label="Selecionar categoria de carpete (dispositivos móveis)"
                 >
                   {categories.map((category) => (
                     <option key={category} value={category}>
@@ -169,6 +173,7 @@ const Footer = () => {
               <a
                 href="#"
                 className="text-gray-400 hover:text-white transition-colors"
+                aria-label="Ir para a página do Facebook da Carpetes Personalizados"
               >
                 <svg
                   className="h-6 w-6"
@@ -186,6 +191,7 @@ const Footer = () => {
               <a
                 href="#"
                 className="text-gray-400 hover:text-white transition-colors"
+                aria-label="Ir para a página do Instagram da Carpetes Personalizados"
               >
                 <svg
                   className="h-6 w-6"
@@ -203,6 +209,7 @@ const Footer = () => {
               <a
                 href="#"
                 className="text-gray-400 hover:text-white transition-colors"
+                aria-label="Ir para a página do Twitter da Carpetes Personalizados"
               >
                 <svg
                   className="h-6 w-6"
@@ -746,13 +753,14 @@ header {
 
       {/* Download Button */}
       <div className="fixed bottom-4 right-4 z-50">
-        <a
+        <button
           onClick={downloadLayout}
-          className="cursor-pointer inline-flex items-center gap-2 bg-gradient-to-r from-purple-600 to-orange-400 hover:from-purple-700 hover:to-orange-500 text-white font-medium py-3 px-8 rounded-full shadow-lg"
+          className="inline-flex items-center gap-2 bg-gradient-to-r from-purple-600 to-orange-400 hover:from-purple-700 hover:to-orange-500 text-white font-medium py-3 px-8 rounded-full shadow-lg"
           style={{
             boxShadow: "0 4px 14px rgba(0, 0, 0, 0.25)",
             transition: "all 0.3s ease",
           }}
+          aria-label="Baixar versão completa em HTML5 do layout de Carpetes Personalizados"
         >
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -763,13 +771,14 @@ header {
             strokeWidth="2"
             strokeLinecap="round"
             strokeLinejoin="round"
+            aria-hidden="true"
           >
             <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
             <polyline points="7 10 12 15 17 10" />
             <line x1="12" y1="15" x2="12" y2="3" />
           </svg>
           <span className="font-semibold">BAIXAR VERSÃO HTML5</span>
-        </a>
+        </button>
       </div>
       {/* Header */}
       <Header />
