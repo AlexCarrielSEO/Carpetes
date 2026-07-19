@@ -59,6 +59,7 @@ export default function ServiceAreaSection({
                   value={zipCode}
                   onChange={(e) => setZipCode(e.target.value)}
                   className="max-w-xs"
+                  aria-label="CEP para verificação de cobertura"
                 />
                 <Button type="submit">Verificar</Button>
               </form>
@@ -85,6 +86,7 @@ export default function ServiceAreaSection({
                   onChange={(e) => setEmail(e.target.value)}
                   required
                   className="flex-grow"
+                  aria-label="Endereço de email para assinar a newsletter"
                 />
                 <Button type="submit">Assinar</Button>
               </form>
