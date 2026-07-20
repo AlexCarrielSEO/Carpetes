@@ -56,6 +56,7 @@ export default function ServiceAreaSection({
                 <Input
                   type="text"
                   placeholder="Digite seu CEP"
+                  aria-label="Digite seu CEP"
                   value={zipCode}
                   onChange={(e) => setZipCode(e.target.value)}
                   className="max-w-xs"
@@ -81,6 +82,7 @@ export default function ServiceAreaSection({
                 <Input
                   type="email"
                   placeholder="Seu endereço de email"
+                  aria-label="Seu endereço de email"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                   required
@@ -106,6 +108,7 @@ export default function ServiceAreaSection({
                       <MapPin
                         size={48}
                         className="mx-auto mb-4 text-gray-600"
+                        aria-hidden="true"
                       />
                       <p className="text-gray-700 font-medium">
                         Mapa Interativo da Área de Serviço

@@ -170,6 +170,7 @@ const Footer = ({
                       <Input
                         type="text"
                         placeholder="Seu Nome"
+                        aria-label="Seu Nome"
                         required
                         className="bg-slate-800 border-slate-700"
                       />
@@ -178,6 +179,7 @@ const Footer = ({
                       <Input
                         type="email"
                         placeholder="Seu Email"
+                        aria-label="Seu Email"
                         required
                         className="bg-slate-800 border-slate-700"
                       />
@@ -187,6 +189,7 @@ const Footer = ({
                     <Input
                       type="text"
                       placeholder="Assunto"
+                      aria-label="Assunto da mensagem"
                       required
                       className="bg-slate-800 border-slate-700"
                     />
@@ -194,6 +197,7 @@ const Footer = ({
                   <div>
                     <Textarea
                       placeholder="Sua Mensagem"
+                      aria-label="Sua Mensagem"
                       rows={4}
                       required
                       className="bg-slate-800 border-slate-700"
