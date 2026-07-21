@@ -58,6 +58,7 @@ export default function ServiceAreaSection({
                   placeholder="Digite seu CEP"
                   value={zipCode}
                   onChange={(e) => setZipCode(e.target.value)}
+                  aria-label="Código Postal (CEP)"
                   className="max-w-xs"
                 />
                 <Button type="submit">Verificar</Button>
@@ -83,6 +84,7 @@ export default function ServiceAreaSection({
                   placeholder="Seu endereço de email"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
+                  aria-label="Endereço de e-mail para newsletter"
                   required
                   className="flex-grow"
                 />
