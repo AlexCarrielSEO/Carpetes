@@ -2,7 +2,7 @@ import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { AspectRatio } from "@/components/ui/aspect-ratio";
-import { MapPin } from "lucide-react";
+import { MapPin, CheckCircle2, AlertCircle, Loader2 } from "lucide-react";
 
 interface ServiceAreaSectionProps {
   title?: string;
@@ -21,15 +21,51 @@ export default function ServiceAreaSection({
 }: ServiceAreaSectionProps) {
   const [zipCode, setZipCode] = useState("");
   const [zipCodeResult, setZipCodeResult] = useState<null | boolean>(null);
+  const [isChecking, setIsChecking] = useState(false);
+  const [validationError, setValidationError] = useState<string | null>(null);
   const [email, setEmail] = useState("");
   const [isSubscribed, setIsSubscribed] = useState(false);
 
+  const handleZipChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    let value = e.target.value;
+    // Remove all non-digits
+    const digits = value.replace(/\D/g, "");
+
+    // Format as 00000-000
+    let formatted = digits;
+    if (digits.length > 5) {
+      formatted = `${digits.slice(0, 5)}-${digits.slice(5, 8)}`;
+    } else {
+      formatted = digits.slice(0, 5);
+    }
+
+    setZipCode(formatted);
+    setValidationError(null);
+    setZipCodeResult(null);
+  };
+
   const checkServiceArea = (e: React.FormEvent) => {
     e.preventDefault();
-    // This would normally check against a database of service areas
-    // For demo purposes, we'll just check if the zip code starts with a number less than 6
-    const firstDigit = parseInt(zipCode.charAt(0));
-    setZipCodeResult(!isNaN(firstDigit) && firstDigit < 6);
+
+    const cleanZip = zipCode.replace(/\D/g, "");
+    if (cleanZip.length < 8) {
+      setValidationError("O CEP deve conter 8 dígitos.");
+      setZipCodeResult(null);
+      return;
+    }
+
+    setValidationError(null);
+    setZipCodeResult(null);
+    setIsChecking(true);
+
+    // Simulated API call with loading spinner
+    setTimeout(() => {
+      // This would normally check against a database of service areas
+      // For demo purposes, we'll just check if the zip code starts with a number less than 6
+      const firstDigit = parseInt(cleanZip.charAt(0));
+      setZipCodeResult(!isNaN(firstDigit) && firstDigit < 6);
+      setIsChecking(false);
+    }, 800);
   };
 
   const handleEmailSubmit = (e: React.FormEvent) => {
@@ -52,24 +88,70 @@ export default function ServiceAreaSection({
             <p className="text-lg text-gray-700 mb-8">{description}</p>
 
             <div className="mb-8">
-              <form onSubmit={checkServiceArea} className="flex gap-4">
-                <Input
-                  type="text"
-                  placeholder="Digite seu CEP"
-                  value={zipCode}
-                  onChange={(e) => setZipCode(e.target.value)}
-                  className="max-w-xs"
-                />
-                <Button type="submit">Verificar</Button>
+              <form onSubmit={checkServiceArea} className="flex flex-col sm:flex-row gap-4 items-start">
+                <div className="w-full max-w-xs">
+                  <Input
+                    type="text"
+                    id="cep-input"
+                    placeholder="Digite seu CEP (Ex: 01001-000)"
+                    value={zipCode}
+                    onChange={handleZipChange}
+                    className="w-full"
+                    maxLength={9}
+                    aria-describedby="cep-validation"
+                    aria-label="Digite seu CEP para verificar cobertura"
+                  />
+                </div>
+                <Button type="submit" disabled={isChecking || zipCode.replace(/\D/g, "").length < 8}>
+                  {isChecking ? (
+                    <>
+                      <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                      Verificando...
+                    </>
+                  ) : (
+                    "Verificar"
+                  )}
+                </Button>
               </form>
+
+              <div
+                id="cep-validation"
+                aria-live="polite"
+                className="mt-2 text-sm min-h-[20px]"
+              >
+                {validationError && (
+                  <p className="text-red-600 flex items-center gap-1.5 font-medium">
+                    <AlertCircle className="h-4 w-4 shrink-0" />
+                    {validationError}
+                  </p>
+                )}
+              </div>
 
               {zipCodeResult !== null && (
                 <div
-                  className={`mt-4 p-4 rounded-md ${zipCodeResult ? "bg-green-100 text-green-800" : "bg-red-100 text-red-800"}`}
+                  role="status"
+                  aria-live="assertive"
+                  className={`mt-4 p-4 rounded-md flex items-start gap-3 border ${
+                    zipCodeResult
+                      ? "bg-green-50 border-green-200 text-green-800"
+                      : "bg-red-50 border-red-200 text-red-800"
+                  }`}
                 >
-                  {zipCodeResult
-                    ? "Ótimas notícias! Atendemos sua área."
-                    : "Lamentamos, mas atualmente não atendemos sua área. Entre em contato conosco para arranjos especiais."}
+                  {zipCodeResult ? (
+                    <CheckCircle2 className="h-5 w-5 mt-0.5 text-green-600 shrink-0" />
+                  ) : (
+                    <AlertCircle className="h-5 w-5 mt-0.5 text-red-600 shrink-0" />
+                  )}
+                  <div>
+                    <p className="font-semibold">
+                      {zipCodeResult ? "Área Atendida!" : "Fora da Área de Cobertura"}
+                    </p>
+                    <p className="text-sm mt-1 opacity-90">
+                      {zipCodeResult
+                        ? `Ótimas notícias! Atendemos a região do CEP ${zipCode}.`
+                        : `Lamentamos, mas atualmente não atendemos o CEP ${zipCode}. Entre em contato conosco para arranjos especiais.`}
+                    </p>
+                  </div>
                 </div>
               )}
             </div>
