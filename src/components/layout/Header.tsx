@@ -79,13 +79,13 @@ const Header = ({
 
         {/* Action Buttons */}
         <div className="hidden md:flex items-center space-x-4">
-          <Button variant="ghost" size="icon">
+          <Button variant="ghost" size="icon" aria-label="Pesquisar">
             <Search className="h-5 w-5" />
           </Button>
-          <Button variant="ghost" size="icon">
+          <Button variant="ghost" size="icon" aria-label="Perfil do Usuário">
             <User className="h-5 w-5" />
           </Button>
-          <Button variant="ghost" size="icon">
+          <Button variant="ghost" size="icon" aria-label="Carrinho de Compras">
             <ShoppingCart className="h-5 w-5" />
           </Button>
           <Button variant="default" className="ml-2">
@@ -94,7 +94,7 @@ const Header = ({
         </div>
 
         {/* Mobile Menu Button */}
-        <Button variant="ghost" size="icon" className="md:hidden">
+        <Button variant="ghost" size="icon" className="md:hidden" aria-label="Menu de Navegação">
           <Menu className="h-6 w-6" />
         </Button>
       </div>
