@@ -216,7 +216,8 @@ const Footer = ({
                 href={socialLinks.facebook}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="bg-slate-800 p-2 rounded-full hover:bg-primary transition-colors"
+                className="bg-slate-800 p-2 rounded-full hover:bg-primary transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-slate-900"
+                aria-label="Siga-nos no Facebook"
               >
                 <Facebook className="h-5 w-5" />
               </a>
@@ -224,7 +225,8 @@ const Footer = ({
                 href={socialLinks.instagram}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="bg-slate-800 p-2 rounded-full hover:bg-primary transition-colors"
+                className="bg-slate-800 p-2 rounded-full hover:bg-primary transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-slate-900"
+                aria-label="Siga-nos no Instagram"
               >
                 <Instagram className="h-5 w-5" />
               </a>
@@ -232,7 +234,8 @@ const Footer = ({
                 href={socialLinks.twitter}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="bg-slate-800 p-2 rounded-full hover:bg-primary transition-colors"
+                className="bg-slate-800 p-2 rounded-full hover:bg-primary transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-slate-900"
+                aria-label="Siga-nos no Twitter"
               >
                 <Twitter className="h-5 w-5" />
               </a>
@@ -240,7 +243,8 @@ const Footer = ({
                 href={socialLinks.linkedin}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="bg-slate-800 p-2 rounded-full hover:bg-primary transition-colors"
+                className="bg-slate-800 p-2 rounded-full hover:bg-primary transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-slate-900"
+                aria-label="Siga-nos no LinkedIn"
               >
                 <Linkedin className="h-5 w-5" />
               </a>
