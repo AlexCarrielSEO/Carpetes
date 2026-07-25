@@ -217,6 +217,7 @@ const Footer = ({
                 target="_blank"
                 rel="noopener noreferrer"
                 className="bg-slate-800 p-2 rounded-full hover:bg-primary transition-colors"
+                aria-label="Facebook"
               >
                 <Facebook className="h-5 w-5" />
               </a>
@@ -225,6 +226,7 @@ const Footer = ({
                 target="_blank"
                 rel="noopener noreferrer"
                 className="bg-slate-800 p-2 rounded-full hover:bg-primary transition-colors"
+                aria-label="Instagram"
               >
                 <Instagram className="h-5 w-5" />
               </a>
@@ -233,6 +235,7 @@ const Footer = ({
                 target="_blank"
                 rel="noopener noreferrer"
                 className="bg-slate-800 p-2 rounded-full hover:bg-primary transition-colors"
+                aria-label="Twitter"
               >
                 <Twitter className="h-5 w-5" />
               </a>
@@ -241,6 +244,7 @@ const Footer = ({
                 target="_blank"
                 rel="noopener noreferrer"
                 className="bg-slate-800 p-2 rounded-full hover:bg-primary transition-colors"
+                aria-label="LinkedIn"
               >
                 <Linkedin className="h-5 w-5" />
               </a>
